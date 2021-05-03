@@ -14,8 +14,10 @@ async function getQuote() {
 
   document.getElementById("kanye-quote").innerText = quote;
 
-  const historyOL = document.getElementById("kanye-quote-history");
+  addToHistory(quote);
+}
 
+function addToHistory(quote) {
   if (!quoteHistory.includes(quote)) {
     quoteHistory.push(quote);
     quotePipe.push(quote);
@@ -27,6 +29,7 @@ async function getQuote() {
   if (quotePipe.length > 0) {
     const li = document.createElement("li");
     li.innerText = quotePipe.shift();
+    const historyOL = document.getElementById("kanye-quote-history");
     historyOL.appendChild(li);
   }
 }
