@@ -5,6 +5,7 @@ document.getElementById("new-quote-button").addEventListener("click", getQuote);
 getQuote();
 
 let quoteHistory = [];
+let quotePipe = [];
 
 async function getQuote() {
   const response = await fetch("https://api.kanye.rest/");
@@ -13,13 +14,19 @@ async function getQuote() {
 
   document.getElementById("kanye-quote").innerText = quote;
 
+  const historyOL = document.getElementById("kanye-quote-history");
+
   if (!quoteHistory.includes(quote)) {
     quoteHistory.push(quote);
-
-    if (quoteHistory.length > 1) {
-      const li = document.createElement("li");
-      li.innerText = quoteHistory.slice(-2)[0];
-      document.getElementById("kanye-quote-history").appendChild(li);
+    quotePipe.push(quote);
+    if (quotePipe.length === 1) {
+      //don't show quote and history at the same time
+      return;
     }
+  }
+  if (quotePipe.length > 0) {
+    const li = document.createElement("li");
+    li.innerText = quotePipe.shift();
+    historyOL.appendChild(li);
   }
 }
